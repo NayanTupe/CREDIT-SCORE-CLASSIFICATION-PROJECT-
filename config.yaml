@@ -1,0 +1,86 @@
+# Configuration file for Credit Score Classification Project
+
+# Data Configuration
+data:
+  train_file: 'train.csv'
+  test_file: 'test.csv'
+  target_column: 'Credit_Score'
+  random_state: 42
+
+# Model Configuration
+model:
+  logistic_regression:
+    max_iter: 1000
+    class_weight: 'balanced'
+  
+  random_forest:
+    n_estimators: 100
+    max_depth: 15
+    min_samples_split: 5
+    min_samples_leaf: 2
+    n_jobs: -1
+    class_weight: 'balanced'
+  
+  xgboost:
+    n_estimators: 100
+    learning_rate: 0.1
+    max_depth: 6
+    subsample: 0.8
+    colsample_bytree: 0.8
+    eval_metric: 'mlogloss'
+
+# Training Configuration
+training:
+  test_size: 0.2
+  cv_folds: 5
+  stratify: true
+  hyperparameter_tuning: true
+
+# Hyperparameter Tuning Grids
+hyperparameter_grid:
+  random_forest:
+    n_estimators: [100, 200]
+    max_depth: [10, 15, 20]
+    min_samples_split: [5, 10]
+  
+  xgboost:
+    n_estimators: [100, 200]
+    learning_rate: [0.05, 0.1]
+    max_depth: [5, 6, 7]
+
+# Evaluation Configuration
+evaluation:
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1
+  cv_scoring: 'f1_weighted'
+
+# Preprocessing Configuration
+preprocessing:
+  missing_value_strategy: 'mean'
+  remove_duplicates: true
+  handle_outliers: false
+  outlier_method: 'iqr'
+  outlier_threshold: 1.5
+
+# Feature Engineering
+feature_engineering:
+  create_ratios: true
+  create_interactions: true
+  scaling_method: 'standard'
+  encoding_method: 'onehot'
+
+# Visualization
+visualization:
+  figsize: [12, 6]
+  dpi: 300
+  style: 'seaborn'
+  color_palette: 'viridis'
+
+# Logging
+logging:
+  level: 'INFO'
+  save_logs: true
+  log_file: 'pipeline.log'
